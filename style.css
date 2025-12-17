@@ -351,3 +351,33 @@ footer {
 
 .prev { left: 10px; }
 .next { right: 10px; }
+
+.diem-xet-tuyen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.diem-xet-tuyen img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.diem-xet-tuyen img:hover {
+    transform: scale(1.03);
+}
+
+#diem-xet-tuyen p {
+    font-size: 1.1rem; /* tăng từ 1rem mặc định */
+    line-height: 1.6;  /* thoáng chữ */
+    color: #555;       /* màu tối nhưng nhẹ hơn h2 */
+    margin-bottom: 20px;
+}
+#diem-xet-tuyen p {
+    font-size: 1.15rem;
+    font-weight: 500;       /* chữ đậm vừa phải */
+    letter-spacing: 0.5px;  /* khoảng cách chữ thoáng hơn */
+    color: #333;            /* đồng bộ với nội dung */
+}
