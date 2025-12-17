@@ -53,8 +53,11 @@
     <!-- Popup xem ảnh -->
     <div id="popup" class="popup">
         <span class="close">&times;</span>
+        <button class="prev">&#10094;</button>
         <img id="popupImg" class="popup-img">
+        <button class="next">&#10095;</button>
     </div>
+
 
     <!-- Header -->
     <header>
@@ -83,6 +86,19 @@
             </div>
         </div>
     </section>
+
+    <!-- Tính điểm xét tuyển tổng hợp -->
+    <section id="diem-xet-tuyen">
+    <h2>Tính điểm xét tuyển đại học</h2>
+    <p>Minh chứng và cách tính điểm xét tuyển tổng hợp.</p>
+
+    <div class="diem-xet-tuyen">
+        <img src="diem.xet.tuyenDH-01.jpg" onclick="openDiemPopup(0)">
+        <img src="diem.xet.tuyenDH-02.jpg" onclick="openDiemPopup(1)">
+        <img src="diem.xet.tuyenDH-03.jpg" onclick="openDiemPopup(2)">
+    </div>
+    </section>
+
 
     <!-- Kết quả đánh giá năng lực -->
     <section id="assessment">
@@ -171,6 +187,7 @@
     <section id="contact">
         <h2>Liên hệ</h2>
         <p>Email: nguyenhoangnguyenvt2009@gmail.com</p>
+        <p>Phone: +84 388 123 546</p>
     </section>
 
     <footer>
@@ -178,58 +195,104 @@
     </footer>
 
     <!-- Script -->
-    <script>
-        // Popup ảnh
-        function openPopup(src) {
-            const popup = document.getElementById("popup");
-            document.getElementById("popupImg").src = src;
-            popup.style.display = "flex";
-        }
-        document.querySelector(".close").onclick = () => document.getElementById("popup").style.display = "none";
+<script>
+/* ====== BIẾN CHUNG ====== */
+const popup = document.getElementById("popup");
+const popupImg = document.getElementById("popupImg");
+const popupPrev = popup.querySelector(".prev");
+const popupNext = popup.querySelector(".next");
+const popupClose = popup.querySelector(".close");
 
-        // Slider học bạ
-        const viewAllBtn = document.getElementById("viewAllBtn");
-        const sliderPopup = document.getElementById("sliderPopup");
-        const sliderContainer = sliderPopup.querySelector(".slider-container");
-        const closeSlider = sliderPopup.querySelector(".close-slider");
-        const prevBtn = sliderPopup.querySelector(".prev");
-        const nextBtn = sliderPopup.querySelector(".next");
+/* ====== POPUP ẢNH THƯỜNG ====== */
+function openPopup(src) {
+    popupImg.src = src;
+    popup.style.display = "flex";
+    popupPrev.style.display = "none";
+    popupNext.style.display = "none";
+    isDiemPopup = false;
+}
 
-        let currentIndex = 0;
+/* ====== POPUP ĐIỂM XÉT TUYỂN ====== */
+const diemImages = [
+    "diem.xet.tuyenDH-01.jpg",
+    "diem.xet.tuyenDH-02.jpg",
+    "diem.xet.tuyenDH-03.jpg"
+];
 
-        viewAllBtn.onclick = () => {
-            sliderPopup.style.display = "flex";
-            showSlide(currentIndex);
-        }
+let diemIndex = 0;
+let isDiemPopup = false;
 
-        closeSlider.onclick = () => sliderPopup.style.display = "none";
+function openDiemPopup(index) {
+    diemIndex = index;
+    popupImg.src = diemImages[diemIndex];
+    popup.style.display = "flex";
+    popupPrev.style.display = "block";
+    popupNext.style.display = "block";
+    isDiemPopup = true;
+}
 
-        function showSlide(index) {
-            const slideWidth = sliderContainer.children[0].offsetWidth;
-            sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
-        }
+/* ====== ĐIỀU HƯỚNG ====== */
+popupNext.onclick = () => {
+    if (!isDiemPopup) return;
+    diemIndex = (diemIndex + 1) % diemImages.length;
+    popupImg.src = diemImages[diemIndex];
+};
 
-        nextBtn.onclick = () => {
-            currentIndex = (currentIndex + 1) % sliderContainer.children.length;
-            showSlide(currentIndex);
-        }
+popupPrev.onclick = () => {
+    if (!isDiemPopup) return;
+    diemIndex = (diemIndex - 1 + diemImages.length) % diemImages.length;
+    popupImg.src = diemImages[diemIndex];
+};
 
-        prevBtn.onclick = () => {
-            currentIndex = (currentIndex - 1 + sliderContainer.children.length) % sliderContainer.children.length;
-            showSlide(currentIndex);
-        }
+/* ====== ĐÓNG POPUP ====== */
+popupClose.onclick = () => popup.style.display = "none";
 
-        window.addEventListener("resize", () => showSlide(currentIndex));
+popup.addEventListener("click", (e) => {
+    if (e.target === popup) popup.style.display = "none";
+});
 
-        // ESC đóng popup/slider
-        document.addEventListener("keydown", (event) => {
-            if(event.key === "Escape") {
-                ["popup", "sliderPopup"].forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.style.display = "none";
-                });
-            }
-        });
-    </script>
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") popup.style.display = "none";
+});
+
+/* ====== SLIDER HỌC BẠ ====== */
+const viewAllBtn = document.getElementById("viewAllBtn");
+const sliderPopup = document.getElementById("sliderPopup");
+const sliderContainer = sliderPopup.querySelector(".slider-container");
+const closeSlider = sliderPopup.querySelector(".close-slider");
+const prevBtn = sliderPopup.querySelector(".prev");
+const nextBtn = sliderPopup.querySelector(".next");
+
+let currentIndex = 0;
+
+viewAllBtn.onclick = () => {
+    sliderPopup.style.display = "flex";
+    showSlide(currentIndex);
+};
+
+closeSlider.onclick = () => sliderPopup.style.display = "none";
+
+function showSlide(index) {
+    const slideWidth = sliderContainer.children[0].offsetWidth;
+    sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
+}
+
+nextBtn.onclick = () => {
+    currentIndex = (currentIndex + 1) % sliderContainer.children.length;
+    showSlide(currentIndex);
+};
+
+prevBtn.onclick = () => {
+    currentIndex = (currentIndex - 1 + sliderContainer.children.length) % sliderContainer.children.length;
+    showSlide(currentIndex);
+};
+
+window.addEventListener("resize", () => showSlide(currentIndex));
+
+sliderPopup.addEventListener("click", (e) => {
+    if (e.target === sliderPopup) sliderPopup.style.display = "none";
+});
+</script>
+
 </body>
 </html>
