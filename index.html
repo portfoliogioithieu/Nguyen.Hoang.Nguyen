@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Cá Nhân</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ví dụ CSS cơ bản để popup và slider hoạt động */
+        .popup, .slider-popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+        .popup-img, .slider-container img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close, .close-slider {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        .slider-container {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: white;
+            background: rgba(0,0,0,0.3);
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Popup xem ảnh -->
+    <div id="popup" class="popup">
+        <span class="close">&times;</span>
+        <img id="popupImg" class="popup-img">
+    </div>
+
+    <!-- Header -->
+    <header>
+        <img src="avatar.jpg" onclick="openPopup(this.src)" alt="Ảnh đại diện của Nam" class="avatar">
+        <h1>NGUYỄN HOÀNG NGUYÊN</h1>
+        <p>Sinh Viên Đại Học Bách Khoa TPHCM</p>
+    </header>
+
+    <!-- Giới thiệu -->
+    <section id="about">
+        <h2>Giới thiệu</h2>
+        <p>Xin chào! Mình là Nguyên, sinh viên yêu thích thiết kế và xây dựng trải nghiệm web hiện đại.</p>
+    </section>
+
+    <!-- Xác nhận kết quả đại học -->
+    <section id="university-result">
+        <h2>Xác nhận kết quả đậu đại học</h2>
+        <div class="university">
+            <img src="dau-dai-hoc.jpg" onclick="openPopup(this.src)" alt="Xác nhận kết quả đậu đại học">
+            <div class="uni-info">
+                <p class="title">Xác nhận trúng tuyển Đại học</p>
+                <p><strong>Trường:</strong> Đại học Bách Khoa TPHCM</p>
+                <p><strong>Ngành:</strong> Kỹ Thuật Cơ Khí</p>
+                <p><strong>Năm tuyển sinh:</strong> 2025</p>
+                <p><strong>Hình thức:</strong> Xét tuyển tổng hợp</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kết quả đánh giá năng lực -->
+    <section id="assessment">
+        <h2>Kết quả đánh giá năng lực</h2>
+        <div class="assessment">
+            <img src="assessment.jpg" alt="Minh họa đánh giá năng lực" class="assessment-img">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Môn</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Tiếng Việt</td><td>260</td></tr>
+                    <tr><td>Tiếng Anh</td><td>222</td></tr>
+                    <tr><td>Toán học</td><td>217</td></tr>
+                    <tr><td>Tư duy Khoa học</td><td>267</td></tr>
+                    <tr><td>Tổng điểm</td><td>966</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Chứng chỉ & Thành tích -->
+    <section id="certificates">
+        <h2>Chứng chỉ & Thành tích</h2>
+        <div class="certificates">
+            <article class="certificate">
+                <img src="hsg-tinh.jpg" onclick="openPopup(this.src)" alt="Giải nhất HSG cấp tỉnh">
+                <p class="title">Giải nhất HSG cấp tỉnh</p>
+                <p class="year">2024-2025</p>
+            </article>
+            <article class="certificate">
+                <img src="ielts.jpg" onclick="openPopup(this.src)" alt="Chứng chỉ ngoại ngữ IELTS">
+                <p class="title">Chứng chỉ ngoại ngữ IELTS</p>
+                <p class="year">2024</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Giấy khen THPT -->
+    <section id="awards">
+        <h2>Giấy khen THPT</h2>
+        <div class="awards">
+            <article class="award">
+                <img src="lop10.jpg" onclick="openPopup(this.src)" alt="Giấy khen lớp 10">
+                <p class="title">Học sinh giỏi – Lớp 10</p>
+                <p class="year">2022-2023</p>
+            </article>
+            <article class="award">
+                <img src="lop11.jpg" onclick="openPopup(this.src)" alt="Giấy khen lớp 11">
+                <p class="title">Học sinh giỏi – Lớp 11</p>
+                <p class="year">2023-2024</p>
+            </article>
+            <article class="award">
+                <img src="lop12.jpg" onclick="openPopup(this.src)" alt="Giấy khen lớp 12">
+                <p class="title">Học sinh xuất sắc – Lớp 12</p>
+                <p class="year">2024-2025</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Học bạ THPT -->
+    <section id="transcript">
+        <h2>Học bạ THPT</h2>
+        <button id="viewAllBtn">Xem tất cả</button>
+
+        <div id="sliderPopup" class="slider-popup">
+            <span class="close-slider">&times;</span>
+            <div class="slider-container">
+                <img src="hocba1.jpg" alt="Trang 1">
+                <img src="hocba2.jpg" alt="Trang 2">
+                <img src="hocba3.jpg" alt="Trang 3">
+                <img src="hocba4.jpg" alt="Trang 4">
+                <img src="hocba5.jpg" alt="Trang 5">
+                <img src="hocba6.jpg" alt="Trang 6">
+                <img src="hocba7.jpg" alt="Trang 7">
+            </div>
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Liên hệ -->
+    <section id="contact">
+        <h2>Liên hệ</h2>
+        <p>Email: nguyenhoangnguyenvt2009@gmail.com</p>
+    </section>
+
+    <footer>
+        <p>© 2025 Nguyên Portfolio</p>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        // Popup ảnh
+        function openPopup(src) {
+            const popup = document.getElementById("popup");
+            document.getElementById("popupImg").src = src;
+            popup.style.display = "flex";
+        }
+        document.querySelector(".close").onclick = () => document.getElementById("popup").style.display = "none";
+
+        // Slider học bạ
+        const viewAllBtn = document.getElementById("viewAllBtn");
+        const sliderPopup = document.getElementById("sliderPopup");
+        const sliderContainer = sliderPopup.querySelector(".slider-container");
+        const closeSlider = sliderPopup.querySelector(".close-slider");
+        const prevBtn = sliderPopup.querySelector(".prev");
+        const nextBtn = sliderPopup.querySelector(".next");
+
+        let currentIndex = 0;
+
+        viewAllBtn.onclick = () => {
+            sliderPopup.style.display = "flex";
+            showSlide(currentIndex);
+        }
+
+        closeSlider.onclick = () => sliderPopup.style.display = "none";
+
+        function showSlide(index) {
+            const slideWidth = sliderContainer.children[0].offsetWidth;
+            sliderContainer.style.transform = `translateX(-${index * slideWidth}px)`;
+        }
+
+        nextBtn.onclick = () => {
+            currentIndex = (currentIndex + 1) % sliderContainer.children.length;
+            showSlide(currentIndex);
+        }
+
+        prevBtn.onclick = () => {
+            currentIndex = (currentIndex - 1 + sliderContainer.children.length) % sliderContainer.children.length;
+            showSlide(currentIndex);
+        }
+
+        window.addEventListener("resize", () => showSlide(currentIndex));
+
+        // ESC đóng popup/slider
+        document.addEventListener("keydown", (event) => {
+            if(event.key === "Escape") {
+                ["popup", "sliderPopup"].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.style.display = "none";
+                });
+            }
+        });
+    </script>
+</body>
+</html>
